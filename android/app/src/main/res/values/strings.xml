@@ -1,7 +1,3 @@
-<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Reachout</string>
-    <string name="title_activity_main">Reachout</string>
-    <string name="package_name">com.reachout.app</string>
-    <string name="custom_url_scheme">com.reachout.app</string>
+    <string name="app_name">My App Name</string>
 </resources>
