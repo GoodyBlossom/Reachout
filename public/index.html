@@ -3,6 +3,341 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReachOut - Church Outreach Follow-up</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#hero" aria-label="ReachOut, Global Impact Church">
+        <span class="nav-logo" aria-hidden="true">RO</span>
+        <span class="nav-brand-text">
+          <span class="nav-app-name">ReachOut</span>
+          <span class="nav-church-name">Global Impact Church</span>
+        </span>
+      </a>
+      <div class="nav-actions">
+        <div class="nav-pill" aria-label="System live">
+          <span class="live-dot" aria-hidden="true"></span>
+          Live
+        </div>
+        <button class="nav-menu-btn" type="button" aria-label="Open menu">
+          <span aria-hidden="true">Menu</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <header id="hero" role="banner">
+    <div class="hero-inner">
+      <div class="hero-badge" aria-label="Platform type">
+        <span aria-hidden="true"></span>WhatsApp-First Follow-up
+      </div>
+
+      <h1>No invited soul<br /><em>left behind.</em></h1>
+
+      <p>Automate personalized WhatsApp follow-ups for every outreach contact, so your church team focuses on people, not paperwork.</p>
+
+      <div class="hero-cta-row">
+        <button id="btn-primary" type="button">Import Contacts &amp; Start Follow-up</button>
+        <button class="btn-ghost" type="button" data-scroll-target="#sequence-heading">See how it works</button>
+      </div>
+
+      <div class="hero-stats" role="region" aria-label="Platform statistics">
+        <div class="hero-stat">
+          <strong>3x</strong>
+          <span>Follow-up steps</span>
+        </div>
+        <div class="hero-stat">
+          <strong>AI</strong>
+          <span>Response detection</span>
+        </div>
+        <div class="hero-stat">
+          <strong>0%</strong>
+          <span>Contacts missed</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section aria-labelledby="import-heading">
+      <p class="section-label">Step 1 - Import</p>
+      <div class="card">
+        <h2 id="import-heading">Upload Contacts</h2>
+        <p>Import your outreach spreadsheet to kick off automated follow-ups.</p>
+
+        <form id="import-form" novalidate aria-label="Import contacts form">
+          <div class="form-field">
+            <label for="input-church-name">Church / Outreach Name</label>
+            <input id="input-church-name" type="text" placeholder="e.g. Gracepoint Chapel" autocomplete="organization" />
+          </div>
+
+          <div class="form-field">
+            <label for="input-coordinator">Coordinator Name</label>
+            <input id="input-coordinator" type="text" placeholder="e.g. Frank Obi" autocomplete="name" />
+          </div>
+
+          <div class="form-field">
+            <label for="input-event-date">Outreach Date</label>
+            <input id="input-event-date" type="date" />
+          </div>
+
+          <div class="form-field">
+            <label for="input-followup-delay">Days Between Follow-ups</label>
+            <select id="input-followup-delay" aria-describedby="delay-hint">
+              <option value="1">Every 1 day</option>
+              <option value="2" selected>Every 2 days</option>
+              <option value="3">Every 3 days</option>
+              <option value="7">Weekly</option>
+            </select>
+            <span id="delay-hint" class="sr-only">Choose the interval between each follow-up message in the 3-step sequence.</span>
+          </div>
+
+          <div class="form-field">
+            <label for="input-file">Upload Spreadsheet (Excel / CSV)</label>
+            <label class="upload-zone" for="input-file" role="button" tabindex="0">
+              <input id="input-file" type="file" accept=".xlsx,.xls,.csv" />
+              <span class="upload-icon" aria-hidden="true">File</span>
+              <span class="upload-title">Tap to choose file</span>
+              <span class="upload-help">Supports .xlsx, .xls, .csv</span>
+            </label>
+          </div>
+
+          <button class="btn-submit" type="submit">Upload &amp; Begin Follow-up</button>
+          <p class="form-note" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section aria-labelledby="contacts-heading">
+      <p class="section-label">Step 2 - Contacts</p>
+      <div class="card">
+        <h2 id="contacts-heading">Outreach Contacts</h2>
+        <p>Imported contacts and their current follow-up status.</p>
+
+        <ul id="list-root" aria-label="Outreach contact list" aria-live="polite">
+          <li class="contact-item">
+            <div class="avatar" aria-hidden="true">AO</div>
+            <div class="contact-info">
+              <strong>Adaeze Okonkwo</strong>
+              <div class="contact-step" aria-label="Follow-up steps: 2 of 3 completed">
+                <span class="dot done" title="Step 1 sent"></span>
+                <span class="dot done" title="Step 2 sent"></span>
+                <span class="dot" title="Step 3 pending"></span>
+              </div>
+            </div>
+            <span class="status-pill responded">Responded</span>
+          </li>
+
+          <li class="contact-item">
+            <div class="avatar" aria-hidden="true">EB</div>
+            <div class="contact-info">
+              <strong>Emmanuel Bello</strong>
+              <div class="contact-step" aria-label="Follow-up steps: 1 of 3 completed">
+                <span class="dot done" title="Step 1 sent"></span>
+                <span class="dot" title="Step 2 pending"></span>
+                <span class="dot" title="Step 3 pending"></span>
+              </div>
+            </div>
+            <span class="status-pill sent">Msg Sent</span>
+          </li>
+
+          <li class="contact-item">
+            <div class="avatar" aria-hidden="true">CU</div>
+            <div class="contact-info">
+              <strong>Chioma Uche</strong>
+              <div class="contact-step" aria-label="Follow-up steps: 3 of 3 completed">
+                <span class="dot done" title="Step 1 sent"></span>
+                <span class="dot done" title="Step 2 sent"></span>
+                <span class="dot done" title="Step 3 sent"></span>
+              </div>
+            </div>
+            <span class="status-pill assigned">Assigned</span>
+          </li>
+
+          <li class="contact-item">
+            <div class="avatar" aria-hidden="true">TI</div>
+            <div class="contact-info">
+              <strong>Tunde Ibrahim</strong>
+              <div class="contact-step" aria-label="Follow-up steps: 0 of 3 completed">
+                <span class="dot" title="Step 1 pending"></span>
+                <span class="dot" title="Step 2 pending"></span>
+                <span class="dot" title="Step 3 pending"></span>
+              </div>
+            </div>
+            <span class="status-pill pending">Pending</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="sequence-heading">
+      <p class="section-label">Step 3 - Sequence</p>
+      <div class="sequence-card">
+        <h2 id="sequence-heading">Follow-up Sequence</h2>
+        <p>Three personalized WhatsApp messages sent automatically.</p>
+        <div class="sequence-steps" role="list">
+          <div class="seq-step" role="listitem">
+            <div class="seq-line">
+              <div class="seq-num" aria-label="Step 1">1</div>
+              <div class="seq-connector" aria-hidden="true"></div>
+            </div>
+            <div class="seq-content">
+              <strong>Welcome Message</strong>
+              <p>"Hi [Name], it was a blessing meeting you at our outreach! We'd love for you to join us this Sunday..."</p>
+              <span class="seq-tag">Day 0 - Immediate</span>
+            </div>
+          </div>
+
+          <div class="seq-step" role="listitem">
+            <div class="seq-line">
+              <div class="seq-num" aria-label="Step 2">2</div>
+              <div class="seq-connector" aria-hidden="true"></div>
+            </div>
+            <div class="seq-content">
+              <strong>Gentle Reminder</strong>
+              <p>"We're thinking of you, [Name]! Our doors are open every Sunday at 9am. Let us know if you'd like directions..."</p>
+              <span class="seq-tag">Day 2 - Follow-up</span>
+            </div>
+          </div>
+
+          <div class="seq-step" role="listitem">
+            <div class="seq-line">
+              <div class="seq-num" aria-label="Step 3">3</div>
+            </div>
+            <div class="seq-content">
+              <strong>Volunteer Handoff</strong>
+              <p>"[Name], one of our team members, [Volunteer], would love to personally connect with you and answer any questions..."</p>
+              <span class="seq-tag">Day 4 - Personal touch</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="insights-heading">
+      <p class="section-label">Insights</p>
+
+      <div id="insights-panel" role="region" aria-labelledby="insights-heading">
+        <div class="insights-header">
+          <h2 id="insights-heading">Outreach Dashboard</h2>
+          <div class="live-badge" aria-label="Live data">
+            <span class="live-dot" aria-hidden="true"></span>
+            Live
+          </div>
+        </div>
+
+        <div class="metrics-grid" role="list" aria-label="Key metrics">
+          <div class="metric-tile" role="listitem">
+            <div class="metric-val" aria-label="48 total contacts">48</div>
+            <div class="metric-label">Contacts Imported</div>
+          </div>
+          <div class="metric-tile highlight" role="listitem">
+            <div class="metric-val" aria-label="41 messages sent">41</div>
+            <div class="metric-label">Messages Sent</div>
+          </div>
+          <div class="metric-tile" role="listitem">
+            <div class="metric-val" aria-label="19 responses received">19</div>
+            <div class="metric-label">Responses</div>
+          </div>
+          <div class="metric-tile" role="listitem">
+            <div class="metric-val" aria-label="11 contacts assigned">11</div>
+            <div class="metric-label">Assigned</div>
+          </div>
+        </div>
+
+        <div class="progress-section" role="list" aria-label="Follow-up progress">
+          <div class="progress-row" role="listitem">
+            <div class="progress-label-row">
+              <span>Follow-up Completion</span>
+              <span>85%</span>
+            </div>
+            <div class="progress-track" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="85% follow-up completion">
+              <div class="progress-fill" style="width:85%"></div>
+            </div>
+          </div>
+
+          <div class="progress-row" role="listitem">
+            <div class="progress-label-row">
+              <span>Response Rate</span>
+              <span>46%</span>
+            </div>
+            <div class="progress-track" role="progressbar" aria-valuenow="46" aria-valuemin="0" aria-valuemax="100" aria-label="46% response rate">
+              <div class="progress-fill gold" style="width:46%"></div>
+            </div>
+          </div>
+
+          <div class="progress-row" role="listitem">
+            <div class="progress-label-row">
+              <span>Volunteer Assignments</span>
+              <span>23%</span>
+            </div>
+            <div class="progress-track" role="progressbar" aria-valuenow="23" aria-valuemin="0" aria-valuemax="100" aria-label="23% of contacts assigned to volunteers">
+              <div class="progress-fill violet" style="width:23%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="volunteer-section" aria-labelledby="volunteer-heading">
+          <h3 id="volunteer-heading">Volunteer Load</h3>
+          <ul class="volunteer-list" aria-label="Volunteer assignment list">
+            <li class="volunteer-row">
+              <div class="v-avatar" aria-hidden="true">NK</div>
+              <div class="v-info">
+                <strong>Ngozi Kalu</strong>
+                <span>Zone A</span>
+              </div>
+              <span class="v-count" aria-label="4 contacts assigned">4 contacts</span>
+            </li>
+            <li class="volunteer-row">
+              <div class="v-avatar" aria-hidden="true">SO</div>
+              <div class="v-info">
+                <strong>Samuel Ojo</strong>
+                <span>Zone B</span>
+              </div>
+              <span class="v-count" aria-label="4 contacts assigned">4 contacts</span>
+            </li>
+            <li class="volunteer-row">
+              <div class="v-avatar" aria-hidden="true">FA</div>
+              <div class="v-info">
+                <strong>Fatima Aliyu</strong>
+                <span>Zone C</span>
+              </div>
+              <span class="v-count" aria-label="3 contacts assigned">3 contacts</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">ReachOut</div>
+      <p>Helping church outreach teams ensure every invited person is consistently followed up, so no contact is lost after evangelism.</p>
+      <div class="divider" role="separator" aria-hidden="true"></div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#main">Import Contacts</a>
+        <a href="#insights-panel">Dashboard</a>
+        <a href="#hero">Privacy</a>
+        <a href="#hero">Support</a>
+      </nav>
+      <p class="copyright">2026 ReachOut - Global Impact Church - Built for outreach teams in Nigeria</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ReachOut — Church Outreach Follow-up</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
