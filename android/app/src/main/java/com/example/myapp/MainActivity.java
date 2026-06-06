@@ -1,49 +1,39 @@
-package com.example.myapp;
+package com.taskflowlite.app;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.view.Window;
-import android.view.WindowManager;
 
 public class MainActivity extends Activity {
-    private WebView myWebView;
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        // Remove title bar and make app fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
-        // Initialize WebView programmatically for cleaner layout
-        myWebView = new WebView(this);
-        
-        WebSettings webSettings = myWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true); // Enabled local storage
-        webSettings.setAllowFileAccess(true); // Enabled local asset files
-        webSettings.setAllowContentAccess(true);
-        webSettings.setDatabaseEnabled(true);
-        
-        // Prevent launching external browser on links click
-        myWebView.setWebViewClient(new WebViewClient());
-        
-        // Load the local bundled web frontend assets
-        myWebView.loadUrl("file:///android_asset/www/index.html");
-        
-        setContentView(myWebView);
+
+        webView = new WebView(this);
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setDatabaseEnabled(true);
+        settings.setAllowFileAccess(true);
+        settings.setAllowContentAccess(true);
+
+        webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl("file:///android_asset/www/index.html");
+        setContentView(webView);
     }
 
-    // Capture physical Android back button presses to navigate web history
     @Override
     public void onBackPressed() {
-        if (myWebView != null && myWebView.canGoBack()) {
-            myWebView.goBack();
-        } else {
-            super.onBackPressed();
+        if (webView != null && webView.canGoBack()) {
+            webView.goBack();
+            return;
         }
+        super.onBackPressed();
     }
 }
