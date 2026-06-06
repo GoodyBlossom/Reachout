@@ -1,21 +1,21 @@
-name: Build and Release Android APK
+name: Build and Release Task Flow Lite APK
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch: # Allows manual trigger from the Actions tab
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   build:
-    name: Build APK
+    name: Build signed APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -25,32 +25,51 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      - name: Grant execute permission for gradlew
+      - name: Generate release keystore
+        run: |
+          keytool -genkeypair \
+            -alias taskflowlite \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -keystore android/app/taskflowlite-release.keystore \
+            -storepass taskflowlite \
+            -keypass taskflowlite \
+            -dname "CN=Task Flow Lite, OU=GO Team, O=ReachOut, L=Lagos, S=Lagos, C=NG"
+
+      - name: Grant execute permission for Gradle
         run: chmod +x android/gradlew
 
-      - name: Build Release APK (Unsigned)
+      - name: Build release APK
         run: |
           cd android
           ./gradlew assembleRelease
 
-      - name: Rename APK for Release
-        run: |
-          mv android/app/build/outputs/apk/release/app-release-unsigned.apk android/app/build/outputs/apk/release/reachout-release.apk
+      - name: Copy APK to project root
+        run: cp android/app/build/outputs/apk/release/app-release.apk GOTeam.apk
 
-      - name: Create GitHub Release & Upload APK
+      - name: Test APK metadata
+        run: |
+          $ANDROID_HOME/build-tools/34.0.0/aapt dump badging GOTeam.apk | tee apk-metadata.txt
+          grep "package: name='com.taskflowlite.app'" apk-metadata.txt
+          grep "application-label:'Task Flow Lite'" apk-metadata.txt
+
+      - name: Verify APK signing
+        run: $ANDROID_HOME/build-tools/34.0.0/apksigner verify --verbose --print-certs GOTeam.apk
+
+      - name: Create GitHub Release and upload APK
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.0
-          name: "ReachOut MVP Release v1.0.0"
+          tag_name: task-flow-lite-v1.0.0
+          name: Task Flow Lite v1.0.0
           body: |
-            ### ReachOut Android WebView Wrapper App
-            
-            This release contains the compiled APK of the ReachOut church outreach platform.
-            
-            * **Local Simulation Sandbox:** Included (no internet required for offline tests).
-            * **API permissions enabled:** Internet permissions active to sync Google Sheets and WhatsApp Cloud APIs.
-          draft: false
-          prerelease: false
-          files: android/app/build/outputs/apk/release/reachout-release.apk
+            Compact offline Android WebView APK for Task Flow Lite.
+
+            - Package: com.taskflowlite.app
+            - App name: Task Flow Lite
+            - WebView entry: file:///android_asset/www/index.html
+            - JavaScript and localStorage enabled
+          files: GOTeam.apk
+          fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
