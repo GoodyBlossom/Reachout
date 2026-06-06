@@ -39,7 +39,8 @@ jobs:
 
       - name: Replace invalid launcher PNG resources
         run: |
-          find android/app/src/main/res -name 'ic_launcher.png' -delete
+          find android/app/src/main/res -name 'ic_launcher*' -delete
+          rm -f android/app/src/main/res/values/*.xml
           mkdir -p android/app/src/main/res/drawable
           cat > android/app/src/main/res/drawable/ic_launcher.xml <<'EOF'
           <vector xmlns:android="http://schemas.android.com/apk/res/android"
