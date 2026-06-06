@@ -1,88 +1,62 @@
-# ReachOut — Church Outreach Follow-up Platform
+# ReachOut / Task Flow Lite
 
-ReachOut is a double-sided system designed to automate personalized WhatsApp follow-up messages for church visitors/contacts collected during weekly physical evangelism. It consists of:
-1. An **offline-first simulation frontend** (interactive prototype running fully locally).
-2. A **Node.js Express backend sync server** integrated with Supabase PostgreSQL and Google Sheets.
-3. A **native Android WebView wrapper** that bundles the client-side files inside the APK to run on mobile.
+Task Flow Lite is a compact offline Android WebView package for the ReachOut frontend. It bundles the HTML, CSS, and JavaScript files directly inside the APK, so the app can open and run without a backend or internet connection.
 
----
+## What The App Does
 
-## 1. Running the Web Application Locally
+- Shows a mobile-friendly outreach follow-up interface.
+- Lets a coordinator enter outreach details and choose a contacts spreadsheet.
+- Displays sample outreach contacts, follow-up sequence steps, and dashboard metrics.
+- Runs as a native Android WebView app named **Task Flow Lite** with package name `com.taskflowlite.app`.
 
-To test the application locally in developer mode:
+## Run The Web App Locally
 
-### Prerequisites
-* [Node.js](https://nodejs.org) (v18.0.0 or higher) installed on your system.
+Open `public/index.html` in a browser, or serve the folder with any simple static server.
 
-### Installation
-1. Open a terminal/command prompt in the project root directory.
-2. Install the backend dependencies:
-   ```bash
-   npm install
-   ```
-   *(On Windows, if PowerShell execution policy blocks standard npm scripts, run: `npm.cmd install`)*
+Example with Node.js:
 
-### Configuration
-1. Copy the `.env.example` file and rename it to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-2. Open `.env` and fill in your Meta WhatsApp API credentials and Google Cloud Platform service account JSON private keys.
-
-### Start the Server
-Run the local server:
 ```bash
-npm start
+npx serve public
 ```
-The console will output: `ReachOut AI Backend Server listening on http://localhost:3000`. You can now open your browser and navigate to `http://localhost:3000` to interact with the frontend.
 
----
+The Android APK uses the same files copied into:
 
-## 2. Building the Android APK
+```text
+android/app/src/main/assets/www
+```
 
-The project includes a lightweight, native Android WebView wrapper project configured in the `/android` directory. The web files are bundled locally inside the APK to allow offline simulation runtimes.
+The WebView loads:
 
-### Prerequisites
-To build the APK locally, your machine requires:
-* **Java Development Kit (JDK 17 or higher)** installed and the `JAVA_HOME` environment variable configured.
-* **Android SDK / command-line tools** or **Android Studio** installed.
+```text
+file:///android_asset/www/index.html
+```
 
-### Build via Command Line (Windows)
-Run the automated build script defined in `package.json`:
+## Build The APK
+
+The app is a plain Android WebView wrapper. It does not use Expo, React Native, Capacitor, or a backend.
+
+Build locally from the repository root:
+
 ```bash
-npm run apk:build
+cd android
+./gradlew assembleRelease
+cp app/build/outputs/apk/release/app-release.apk ../GOTeam.apk
 ```
-*(On Windows, if blocked by script execution policies, run: `npm.cmd run apk:build`)*
 
-This script will:
-1. Change directory into the native Android folder.
-2. Compile the project using the Gradle wrapper (`.\gradlew assembleRelease`).
-3. Automatically copy the compiled release package directly to the project root as `release.apk`.
+On Windows PowerShell:
 
-### Build via Android Studio
-1. Launch **Android Studio**.
-2. Select **Open Project** and open the `android` folder in the project directory.
-3. Wait for Gradle to download dependencies and sync the project.
-4. Click **Build > Build Bundle(s) / APK(s) > Build APK(s)** in the top menu bar.
+```powershell
+cd android
+.\gradlew.bat assembleRelease
+Copy-Item app\build\outputs\apk\release\app-release.apk ..\GOTeam.apk -Force
+```
 
----
+## Where To Find The APK
 
-## 3. Finding the APK File
+- Local build output copied to the project root: `GOTeam.apk`
+- Raw Gradle output: `android/app/build/outputs/apk/release/app-release.apk`
+- GitHub Release asset: `GOTeam.apk`
 
-* **Automated Script Output:** If you run `npm run apk:build`, the final build package will be placed directly in the **project root folder** as **`release.apk`**.
-* **Gradle Build Outputs Directory:** If compiled via Android Studio or raw gradle commands, you can find the output APK at:
-  ```
-  [project_root]/android/app/build/outputs/apk/release/app-release-unsigned.apk
-  ```
+## Release Build
 
----
-
-## 4. Technical Wrapping & Network Notes
-
-* **No CDN Files (Bundled Assets):**
-  Make sure all CSS, JS, images, and assets are local files bundled inside the APK. Do not load CDN files.
-  *The frontend files (`index.html` and `app.js`) are fully self-contained inside the `android/app/src/main/assets/www` directory. The layout uses standard system font fallbacks (`sans-serif` and `serif`) to remain functional offline without fetching fonts from the internet.*
-
-* **Internet Permissions:**
-  The WebView app may use internet APIs, so keep Android INTERNET permission enabled.
-  *This is configured in `AndroidManifest.xml` via `<uses-permission android:name="android.permission.INTERNET" />`, enabling the app to communicate with your online Node.js webhook server and database in production.*
+The GitHub Actions workflow builds a signed release APK, verifies its package metadata and signing, copies it to `GOTeam.apk`, creates a GitHub Release, and uploads the APK.
