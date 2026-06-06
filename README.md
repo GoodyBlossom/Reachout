@@ -1,13 +1,13 @@
-# ReachOut / Task Flow Lite
+# ReachOut / GOTeam Lite
 
-Task Flow Lite is a compact offline Android WebView package for the ReachOut frontend. It bundles the HTML, CSS, and JavaScript files directly inside the APK, so the app can open and run without a backend or internet connection.
+GOTeam Lite is a compact offline Android WebView package for the ReachOut frontend. It bundles the HTML, CSS, and JavaScript files directly inside the APK, so the app can open and run without a backend or internet connection.
 
 ## What The App Does
 
 - Shows a mobile-friendly outreach follow-up interface.
 - Lets a coordinator enter outreach details and choose a contacts spreadsheet.
 - Displays sample outreach contacts, follow-up sequence steps, and dashboard metrics.
-- Runs as a native Android WebView app named **Task Flow Lite** with package name `com.taskflowlite.app`.
+- Runs as a native Android WebView app named **GOTeam Lite** with package name `com.taskflowlite.app`.
 
 ## Run The Web App Locally
 
