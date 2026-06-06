@@ -3,27 +3,31 @@ plugins {
 }
 
 android {
-    namespace 'com.example.myapp'
+    namespace 'com.taskflowlite.app'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.myapp"
-        minSdk 21
+        applicationId 'com.taskflowlite.app'
+        minSdk 23
         targetSdk 34
         versionCode 1
-        versionName "1.0"
+        versionName '1.0.0'
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('taskflowlite-release.keystore')
+            storePassword 'taskflowlite'
+            keyAlias 'taskflowlite'
+            keyPassword 'taskflowlite'
+        }
     }
 
     buildTypes {
         release {
-            minifyEnabled true // Shrinks Java bytecode
-            shrinkResources true // Removes unused layout and drawable assets
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
         }
     }
-}
-
-dependencies {
-    // Minimal standard dependencies for compact size
-    implementation 'androidx.appcompat:appcompat:1.6.1'
 }
