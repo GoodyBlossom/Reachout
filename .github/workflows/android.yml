@@ -207,7 +207,7 @@ jobs:
           rkbJVve3g5ymRvKIQhGEkQhCAEIQgCCVejW/uyfyxPEEq9Gt/dk/lieAEIQgBCEIAQhCAEIQgBCE
           IAQhCAEIQiLUAhCESBCEIAQhCAEIQgBCEIAglXo1v7sn8sTwhACEIQAhCEAIQhACEIQAhCEAIQhA
           CEIQAhCEAIQhACEIQAhCEAIQhAH/2Q==
-EOF
+          EOF
           base64 -d android/app/src/main/res/drawable/ic_launcher.jpg.b64 > android/app/src/main/res/drawable/ic_launcher.jpg
           rm android/app/src/main/res/drawable/ic_launcher.jpg.b64
 
